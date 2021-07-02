@@ -1,4 +1,4 @@
-module github.com/algorithmer/student_fiber
+module github.com/albukhary/student_fiber
 
 go 1.16
 
