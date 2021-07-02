@@ -73,9 +73,9 @@ func setupRoutes(app *fiber.App) {
 	})
 	app.Get("/students", getStudents)
 	app.Get("/student/:id", getStudent)
-	app.Put("/create/student", createStudent)
+	app.Post("/create/student", createStudent)
 	app.Delete("/delete/student/:id", deleteStudent)
-	app.Patch("update/student/:id", updateStudent)
+	app.Put("update/student/:id", updateStudent)
 }
 
 // API Controllers
@@ -131,7 +131,7 @@ func getStudent(c *fiber.Ctx) error {
 // @Produce json
 // @Param details body Student true "Student details"
 // @Success 200 {object} Student
-// @Router /create/student [put]
+// @Router /create/student [post]
 func createStudent(c *fiber.Ctx) error {
 	var student Student
 
@@ -188,7 +188,7 @@ func deleteStudent(c *fiber.Ctx) error {
 // @Produce json
 // @Param details body Student true "Updated Student Details"
 // @Success 200 {object} Student
-// @Router /update/student/{id} [patch]
+// @Router /update/student/{id} [put]
 func updateStudent(c *fiber.Ctx) error {
 	var student Student
 

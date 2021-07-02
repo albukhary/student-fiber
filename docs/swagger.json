@@ -18,7 +18,7 @@
     "basePath": "/",
     "paths": {
         "/create/student": {
-            "put": {
+            "post": {
                 "consumes": [
                     "application/json"
                 ],
@@ -117,7 +117,7 @@
             }
         },
         "/update/student/{id}": {
-            "patch": {
+            "put": {
                 "consumes": [
                     "application/json"
                 ],

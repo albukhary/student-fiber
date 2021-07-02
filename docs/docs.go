@@ -33,7 +33,7 @@ var doc = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/create/student": {
-            "put": {
+            "post": {
                 "consumes": [
                     "application/json"
                 ],
@@ -132,7 +132,7 @@ var doc = `{
             }
         },
         "/update/student/{id}": {
-            "patch": {
+            "put": {
                 "consumes": [
                     "application/json"
                 ],
