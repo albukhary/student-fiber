@@ -28,8 +28,6 @@ func main() {
 
 	setupRoutes(app)
 
-	app.Listen(":3000")
-
 	//Loading environment variables for DATABASE connection
 	dialect := os.Getenv("DIALECT")
 	host := os.Getenv("HOST")
@@ -46,6 +44,8 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	app.Listen(":8084")
 }
 
 func setupRoutes(app *fiber.App) {
@@ -70,8 +70,13 @@ func setupRoutes(app *fiber.App) {
 func getStudents(c *fiber.Ctx) error {
 	var students []Student
 
-	err = db.Select(&students, "SELECT * FROM student;")
+	// Use db.Select() to write all the rows in a slice
+	err := db.Select(&students, "SELECT * FROM student")
+	if err != nil {
+		log.Fatal(err)
+	}
 
+	//return the slice of students to http
 	return c.JSON(students)
 }
 
@@ -86,10 +91,14 @@ func getStudent(c *fiber.Ctx) error {
 
 	var student Student
 
+	// ID is initially a string when we get it from JSON
+	// convert into int to use in a query
 	id, err := strconv.Atoi(idParam)
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	// query the database using db.Get()
 	err = db.Get(&student, "SELECT id, name, email, age FROM student WHERE id=$1", id)
 	if err != nil {
 		log.Fatal(err)
@@ -111,15 +120,9 @@ func getStudent(c *fiber.Ctx) error {
 func createStudent(c *fiber.Ctx) error {
 	var student Student
 
+	// parse JSON to a student struct
 	c.BodyParser(&student)
 
-	//	// Read requested student details and save it to Student struct
-	//	student.ID, _ = strconv.Atoi(c.Params("id"))
-	//	student.Name = c.Params("name")
-	//	student.Email = c.Params("email")
-	//	student.ID, _ = strconv.Atoi(c.Params("age"))
-
-	// insert into Person query
 	insertStudent := `INSERT INTO student (id, name, email, age) VALUES ($1, $2, $3, $4);`
 
 	// Insert the student
@@ -141,10 +144,14 @@ func deleteStudent(c *fiber.Ctx) error {
 
 	var student Student
 
+	// ID is initially a string when we get it from JSON
+	// convert into int to use in a query
 	id, err1 := strconv.Atoi(idParam)
 	if err1 != nil {
 		log.Fatal(err1)
 	}
+
+	// find the requested student from database
 	err = db.Get(&student, "SELECT id, name, email, age FROM student WHERE id=$1", id)
 	if err != nil {
 		fmt.Println("There is no student with such ID")
@@ -170,14 +177,9 @@ func deleteStudent(c *fiber.Ctx) error {
 func updateStudent(c *fiber.Ctx) error {
 	var student Student
 
+	// parses JSON to struct
 	c.BodyParser(&student)
-	//	// Read requested student details and save it to Student struct
-	//	student.ID, _ = strconv.Atoi(c.Params("id"))
-	//	student.Name = c.Params("name")
-	//	student.Email = c.Params("email")
-	//	student.ID, _ = strconv.Atoi(c.Params("age"))
 
-	// insert into Person query
 	updateStudent := `UPDATE student SET name=$1, email=$2, age=$3 WHERE id=$4;`
 
 	// Insert the student into the database

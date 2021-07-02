@@ -4,7 +4,7 @@ go 1.16
 
 require (
 	github.com/andybalholm/brotli v1.0.3 // indirect
-	github.com/gofiber/fiber/v2 v2.13.0
+	github.com/gofiber/fiber/v2 v2.14.0
 	github.com/jmoiron/sqlx v1.3.4
 	github.com/klauspost/compress v1.13.1 // indirect
 	github.com/lib/pq v1.10.2
