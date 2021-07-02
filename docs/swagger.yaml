@@ -1,4 +1,16 @@
 basePath: /
+definitions:
+  main.Student:
+    properties:
+      age:
+        type: integer
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
 host: localhost:8084
 info:
   contact:
@@ -11,5 +23,111 @@ info:
   termsOfService: http://swagger.io/terms/
   title: Student CRUD using fiber
   version: "1.1"
-paths: {}
+paths:
+  /create/student:
+    put:
+      parameters:
+      - description: Student ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Student Name
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: Student Email
+        in: path
+        name: email
+        required: true
+        type: string
+      - description: Student Age
+        in: path
+        name: Age
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Student'
+      summary: Creates a student record with user input details and writes into database
+  /delete/student/{id}:
+    delete:
+      parameters:
+      - description: Student ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Student'
+      summary: Deletes a student with the specified ID
+  /student/{id}:
+    get:
+      parameters:
+      - description: Student ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Student'
+      summary: Retrieves user based on given ID
+  /students:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/main.Student'
+            type: array
+      summary: Retrieves the list of all students
+  /update/student/{id}:
+    patch:
+      parameters:
+      - description: Student ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: New Student Name
+        in: path
+        name: name
+        required: true
+        type: string
+      - description: New Student Email
+        in: path
+        name: email
+        required: true
+        type: string
+      - description: New Student Age
+        in: path
+        name: Age
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/main.Student'
+      summary: Updates a student record with user input details and writes into database
 swagger: "2.0"
