@@ -73,7 +73,7 @@ func setupRoutes(app *fiber.App) {
 	})
 	app.Get("/students", getStudents)
 	app.Get("/student/:id", getStudent)
-	app.Post("/create/student", createStudent)
+	app.Put("/create/student", createStudent)
 	app.Delete("/delete/student/:id", deleteStudent)
 	app.Patch("update/student/:id", updateStudent)
 }
@@ -127,11 +127,9 @@ func getStudent(c *fiber.Ctx) error {
 
 // createStudent godoc
 // @Summary Creates a student record with user input details and writes into database
+// @Accept json
 // @Produce json
-// @Param id path integer true "Student ID"
-// @Param name path string true "Student Name"
-// @Param email path string true "Student Email"
-// @Param Age path integer true "Student Age"
+// @Param details body Student true "Student details"
 // @Success 200 {object} Student
 // @Router /create/student [put]
 func createStudent(c *fiber.Ctx) error {
@@ -139,6 +137,8 @@ func createStudent(c *fiber.Ctx) error {
 
 	// parse JSON to a student struct
 	c.BodyParser(&student)
+
+	fmt.Println(student)
 
 	insertStudent := `INSERT INTO student (id, name, email, age) VALUES ($1, $2, $3, $4);`
 
@@ -184,11 +184,9 @@ func deleteStudent(c *fiber.Ctx) error {
 
 // updateStudent godoc
 // @Summary Updates a student record with user input details and writes into database
+// @Accept json
 // @Produce json
-// @Param id path integer true "Student ID"
-// @Param name path string true "New Student Name"
-// @Param email path string true "New Student Email"
-// @Param Age path integer true "New Student Age"
+// @Param details body Student true "Updated Student Details"
 // @Success 200 {object} Student
 // @Router /update/student/{id} [patch]
 func updateStudent(c *fiber.Ctx) error {

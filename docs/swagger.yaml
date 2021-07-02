@@ -26,27 +26,15 @@ info:
 paths:
   /create/student:
     put:
+      consumes:
+      - application/json
       parameters:
-      - description: Student ID
-        in: path
-        name: id
+      - description: Student details
+        in: body
+        name: details
         required: true
-        type: integer
-      - description: Student Name
-        in: path
-        name: name
-        required: true
-        type: string
-      - description: Student Email
-        in: path
-        name: email
-        required: true
-        type: string
-      - description: Student Age
-        in: path
-        name: Age
-        required: true
-        type: integer
+        schema:
+          $ref: '#/definitions/main.Student'
       produces:
       - application/json
       responses:
@@ -101,27 +89,15 @@ paths:
       summary: Retrieves the list of all students
   /update/student/{id}:
     patch:
+      consumes:
+      - application/json
       parameters:
-      - description: Student ID
-        in: path
-        name: id
+      - description: Updated Student Details
+        in: body
+        name: details
         required: true
-        type: integer
-      - description: New Student Name
-        in: path
-        name: name
-        required: true
-        type: string
-      - description: New Student Email
-        in: path
-        name: email
-        required: true
-        type: string
-      - description: New Student Age
-        in: path
-        name: Age
-        required: true
-        type: integer
+        schema:
+          $ref: '#/definitions/main.Student'
       produces:
       - application/json
       responses:
