@@ -6,10 +6,23 @@ import (
 	"os"
 	"strconv"
 
+	swagger "github.com/arsmn/fiber-swagger/v2"
 	"github.com/gofiber/fiber/v2"
+
 	"github.com/jmoiron/sqlx"
 	_ "github.com/lib/pq"
 )
+
+// @title Student CRUD using fiber
+// @version 1.1
+// @description This is a sample CRUD application implementing gofiber/fiber and /arsmn/fiber-swagger
+// @termsOfService http://swagger.io/terms/
+// @contact.name API Support
+// @contact.email support@novalab.uz
+// @license.name Novalab 2.0
+// @license.url novalab.uz
+// @host localhost:8084
+// @BasePath /
 
 //struct Student represents body of
 type Student struct {
@@ -26,6 +39,11 @@ var err error
 func main() {
 	app := fiber.New()
 
+	// app.Get("/swagger/*", swagger.Handler)
+	app.Get("/swagger/*", swagger.New(swagger.Config{ // custom
+		URL:         "github.com/albukhary/student_fiber/docs/swagger.json",
+		DeepLinking: false,
+	}))
 	setupRoutes(app)
 
 	//Loading environment variables for DATABASE connection

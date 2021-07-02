@@ -1,0 +1,20 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a sample CRUD application implementing gofiber/fiber and /arsmn/fiber-swagger",
+        "title": "Student CRUD using fiber",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "API Support",
+            "email": "support@novalab.uz"
+        },
+        "license": {
+            "name": "Novalab 2.0",
+            "url": "novalab.uz"
+        },
+        "version": "1.1"
+    },
+    "host": "localhost:8084",
+    "basePath": "/",
+    "paths": {}
+}
